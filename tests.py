@@ -19,7 +19,7 @@ class PledgeTestCase(unittest.TestCase):
             has_core_dump = exit_status_indication & 0x80 == 0x80
             self.assertTrue(has_core_dump)
         else:
-            openbsd.pledge('', '')
+            openbsd.pledge('stdio', '')
             # Not gonna happen
             os.fork()
 
@@ -36,5 +36,5 @@ class PledgeTestCase(unittest.TestCase):
             exit_status = (exit_status_indication >> 8) & 0xff
             self.assertEqual(exit_status, 42)
         else:
-            openbsd.pledge('', '')
+            openbsd.pledge('stdio', '')
             os._exit(42)
