@@ -24,7 +24,7 @@ Openbsd is on PyPI. You can install it using pip:
 
 ## How to run the tests
 
-    python -m unittest tests.py
+    python -m unittest tests
 
 ## Usage
 
