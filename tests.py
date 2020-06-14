@@ -101,6 +101,21 @@ class UnveilTestCase(ProcessTestCase):
                 f.close()
                 os._exit(1)
 
+    def test_cannot_unveil_after_lock(self):
+        """Ensure that we cannot call unveil after calling unveil(None, None)"""
+
+        pid = os.fork()
+        if pid:
+            self.assert_exit_status_equals(0)
+        else:
+            openbsd.unveil('/bin', 'r')
+            openbsd.unveil(None, None)
+            try:
+                openbsd.unveil('/etc', 'r')
+            except PermissionError:
+                os._exit(0)
+            os._exit(1)
+
     def test_unveil_can_read(self):
         """Test that we can read an authorized file"""
 
